@@ -260,4 +260,4 @@ Once the API server is running, visit http://localhost:8000/docs for interactive
 
 ## License
 
-MIT
+AGPL-3.0

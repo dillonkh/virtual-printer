@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  socket-server:
+    build: .
+    container_name: virtual-printer-socket
+    ports:
+      - "9100:9100"
+    volumes:
+      - ./outputs:/app/outputs
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python socket_server.py
+    restart: unless-stopped
+    networks:
+      - printer-network
+
+  api-server:
+    build: .
+    container_name: virtual-printer-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./outputs:/app/outputs
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python api_server.py
+    restart: unless-stopped
+    networks:
+      - printer-network
+
+networks:
+  printer-network:
+    driver: bridge
+
+volumes:
+  outputs:
